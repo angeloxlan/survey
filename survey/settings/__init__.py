@@ -1,9 +1,11 @@
 import os
 from dotenv import load_dotenv
-from .base import *
 
 
 load_dotenv()
+
+# Base settings
+from .base import *
 
 # Development settings
 if os.environ.get('DJANGO_ENVIRONMENT') == 'development':

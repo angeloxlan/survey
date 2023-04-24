@@ -3,9 +3,14 @@ module.exports = {
         './**/*.html',
         './**/*.scss',
         '!./.venv/**/*',
+        '!./node_modules/**/*',
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                'gray-bg': '#f7f8fc',
+            }
+        },
     },
     variants: {},
     plugins: [],

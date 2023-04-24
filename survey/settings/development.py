@@ -7,4 +7,5 @@ ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [
     Path(__file__).resolve().parent.parent.parent / "static",
+    Path(__file__).resolve().parent.parent.parent / "surveys/static",
 ]

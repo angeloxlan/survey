@@ -1,0 +1,47 @@
+{% extends '../base.html' %}
+
+{% block page-styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/survey/css/create.css' %}">
+{% endblock page-styles %}
+
+{% block page-title %}
+    Create Survey
+{% endblock page-title %}
+
+{% block page-actions %}
+    <button type="button" class="action-btn">Create Survey</button>
+{% endblock page-actions %}
+
+{% block page-content %}
+    <div class="survey-details">
+        <div class="form-group">
+            <label for="survey-name">Survey name</label>
+            <input name="survey-name" id="survey-name" placeholder="Survey">
+        </div>
+        <div class="form-group">
+            <label for="survey-description">Survey description</label>
+            <textarea name="survey-name" id="survey-description" 
+                 placeholder="Description" rows="3"></textarea>
+        </div>
+        <div class="divider-form"><div></div></div>
+        <div class="question-form-container">
+            <div class="form-group">
+                <label>Question</label>
+                <input name="survey-question[]" placeholder="Description">
+            </div>
+            <div x-data="options" class="form-group">
+                <label>Options</label>
+                <ul class="options-list">
+                    <li><input name="survey-question-option[0][]" placeholder="Option"></li>
+                </ul>
+                <button @click="addOption()" type="button" class="action-btn">Add Option</button>
+            </div>
+        </div>
+        <button type="button" class="action-btn">Add Question</button>
+    </div>
+{% endblock page-content %}
+
+{% block page-javascript %}
+    <script src="{% static 'surveys/js/create.js' %}" type="text/javascript"></script>
+{% endblock page-javascript %}

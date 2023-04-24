@@ -4,8 +4,8 @@
     "description": "Survey",
     "main": "index.js",
     "scripts": {
-        "watch": "postcss scss/**/*.scss -o static/survey/css/styles.css --watch",
-        "build": "postcss scss/**/*.scss -o static/survey/css/styles.css"
+        "watch": "postcss ./**/*.scss !node_modules/**/* --dir static/survey/css/ --ext .css --watch",
+        "build": "postcss ./**/*.scss !node_modules/**/* --dir static/survey/css/ --ext .css"
     },
     "repository": {
         "type": "git",

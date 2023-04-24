@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Surveys</title>
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static '/survey/css/tailwind.css' %}">
+        <link rel="stylesheet" href="{% static '/survey/css/base.css' %}">
+        {% block page-styles %}{% endblock page-styles %}
+    </head>
+    <body>
+        <header>
+            <div class="header-nav">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="brand-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                </svg>
+
+                <h1>{% block page-title %}Surveys{% endblock page-title %}</h1>
+
+                <div x-data="dropdown" class="dropdown-menu">
+                    <button @click="toggle" type="button" class="dropdown-btn" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="burger-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </button>
+                    <div 
+                        x-show="open" 
+                        x-transition:enter.scale.0.origin.top.right 
+                        x-transition:leave.scale.0.origin.top.right 
+                        class="dropdown-options">
+                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                            <a href="#" class="dropdown-item">Account settings</a>
+                            <form method="POST" action="#">
+                                <button type="submit" class="dropdown-item">Sign out</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+            <div class="divider-header"><div></div></div>
+        </header>
+
+        <main>
+            <div class="page-actions">
+                {% block page-actions %}{% endblock page-actions %}
+            </div>
+            <div class="page-content">
+                {% block page-content %}{% endblock page-content %}
+            </div>
+        </main>
+
+        <script src="{% static 'survey/js/alpine.min.js' %}" type="module"></script>
+        <script src="{% static 'surveys/js/base.js' %}" type="text/javascript"></script>
+        {% block page-javascript %}{% endblock page-javascript %}
+    </body>
+</html>

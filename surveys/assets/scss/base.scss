@@ -1,0 +1,65 @@
+body {
+    @apply bg-gray-bg;
+}
+
+header {
+    @apply flex flex-col mb-6;
+
+    .header-nav {
+        @apply flex justify-around sm:justify-between container mx-auto my-6;
+
+        svg {
+            width: 2.5rem;
+            @apply mx-3 lg:mx-0;
+        }
+
+        svg.brand-icon {
+            @apply hidden sm:inline;
+        }
+
+        h1 {
+            @apply text-4xl font-bold;
+        }
+
+        .dropdown-menu {
+            @apply relative inline-block text-left;
+
+            .dropdown-btn {
+                @apply inline-flex w-full justify-center rounded-md bg-white text-sm font-semibold text-gray-900 shadow-transparent ring-gray-300 bg-transparent;
+            }
+
+            .dropdown-options {
+                @apply absolute right-0 z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
+
+                .dropdown-item {
+                    @apply text-gray-700 block px-4 py-2 text-left text-sm;
+                }
+            }
+        }
+    }
+
+    .divider-header {
+        @apply container mx-auto;
+
+        div {
+            @apply h-0.5 bg-gradient-to-r from-transparent from-0% via-gray-600 via-50% to-transparent
+        }
+    }
+}
+
+main {
+    @apply container mx-auto px-3 md:px-0 grid gap-2 grid-cols-1 sm:col-span-3 md:grid-cols-4;
+
+    .page-actions {
+        @apply col-span-1 flex flex-col gap-3;
+    }
+
+    .page-content {
+        @apply col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-2;
+    }
+}
+
+.action-btn {
+    @apply px-3 py-2 w-56 md:w-48 lg:w-56 text-center self-center bg-white rounded-lg border border-gray-300;
+    @apply hover:scale-105 transition-all duration-150;
+}

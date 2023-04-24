@@ -1,0 +1,36 @@
+.survey-details {
+    @apply flex flex-col gap-3;
+
+    .form-group {
+        @apply flex flex-col;
+
+        label {
+            @apply mb-1;
+        }
+
+        input,
+        textarea {
+            @apply p-1 w-full;
+        }
+
+        ul {
+            @apply list-disc w-full pl-6 mb-4;
+
+            li {
+                @apply mb-2;
+            }
+        }
+    }
+
+    .question-form-container {
+        @apply border-b border-b-gray-300 pb-6;
+    }
+
+    .divider-form {
+        @apply container mx-auto;
+
+        div {
+            @apply h-0.5 bg-gradient-to-r from-transparent from-0% via-gray-600 via-50% to-transparent
+        }
+    }
+}

@@ -10,5 +10,5 @@ class Survey(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
     slug = models.SlugField(max_length=100, unique=True)
-    is_active = models.BinaryField(editable=True, default=False)
+    is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

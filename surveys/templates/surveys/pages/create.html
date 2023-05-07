@@ -10,36 +10,98 @@
 {% endblock page-title %}
 
 {% block page-actions %}
-    <button type="button" class="action-btn">Create Survey</button>
+    <button x-data="actions" @click="createSurveySubmit" type="button" class="action-btn">Create Survey</button>
 {% endblock page-actions %}
 
 {% block page-content %}
-    <div class="survey-details">
-        <div class="form-group">
-            <label for="survey-name">Survey name</label>
-            <input name="survey-name" id="survey-name" placeholder="Survey">
-        </div>
-        <div class="form-group">
-            <label for="survey-description">Survey description</label>
-            <textarea name="survey-name" id="survey-description" 
-                 placeholder="Description" rows="3"></textarea>
-        </div>
-        <div class="divider-form"><div></div></div>
-        <div class="question-form-container">
+    <form action="{% url 'create-survey' %}" method="post" id="create-survey-form">
+        {% csrf_token %}
+        <div x-data="form" class="survey-details">
             <div class="form-group">
-                <label>Question</label>
-                <input name="survey-question[]" placeholder="Description">
+                {% for field in formSurvey %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                {% endfor %}
             </div>
-            <div x-data="options" class="form-group">
-                <label>Options</label>
-                <ul class="options-list">
-                    <li><input name="survey-question-option[0][]" placeholder="Option"></li>
-                </ul>
-                <button @click="addOption()" type="button" class="action-btn">Add Option</button>
+            <div class="divider-form"><div></div></div>
+            <div x-ref="questions-container" class="questions-container">
+                <div class="hidden">
+                    {% with empty_question=formQuestion.empty_form %}
+                    <div x-ref="question-form-container" class="question-form-container placeholder">
+                        <button class="btn-delete-question" @click="deleteQuestion" type="button">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </button>
+                        <div class="form-group">
+                            {{ empty_question }}
+                        </div>
+                        <div class="form-group">
+                            <label>Options</label>
+                            <ul class="options-list">
+                                {{ empty_question.options.management_form }}
+                                {% with empty_option=empty_question.options.empty_form %}
+                                <li class="option-item" x-ref="option-item">
+                                    <div class="option-container">
+                                        {{ empty_option }}
+                                        <button @click="deleteOption" type="button">
+                                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </li>
+                                {% endwith %}
+                            </ul>
+                            <button @click="addOption" type="button" class="action-btn">Add Option</button>
+                        </div>
+                    </div>
+                    {% endwith %}
+                </div>
+                {{ formQuestion.management_form }}
+                {% for question in formQuestion.forms %}
+                    <div class="question-form-container">
+                        <button class="btn-delete-question" @click="deleteQuestion" type="button">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </button>
+                        <div class="form-group">
+                            {{ question.text.label_tag }}
+                            {{ question.text }}
+                            {{ question.text.errors }}
+                        </div>
+                        <div class="form-group">
+                            <label>Options</label>
+                            <ul class="options-list">
+                                {{ question.options.management_form }}
+                                {% for option in question.options.forms %}
+                                    <li class="option-item">
+                                        <div class="option-container">
+                                            {{ option.text }}
+                                            <button @click="deleteOption" type="button">
+                                                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <ul class="errorlist">
+                                        {% for error in option.text.errors %}
+                                            <li>{{ error }}</>
+                                        {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <button @click="addOption" type="button" class="action-btn">Add Option</button>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
+            <button @click="addQuestion" type="button" class="action-btn">Add Question</button>
         </div>
-        <button type="button" class="action-btn">Add Question</button>
-    </div>
+    </form>
 {% endblock page-content %}
 
 {% block page-javascript %}

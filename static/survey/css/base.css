@@ -259,6 +259,7 @@ main {
 main {
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 3rem;
             display: grid;
             grid-template-columns: repeat(1, minmax(0, 1fr));
             gap: 0.5rem;
@@ -354,4 +355,11 @@ main .page-content {
             --tw-scale-x: 1.05;
             --tw-scale-y: 1.05;
             transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+ul.errorlist {
+            list-style-type: disc;
+            padding-left: 1rem;
+            --tw-text-opacity: 1;
+            color: rgb(220 38 38 / var(--tw-text-opacity));
 }

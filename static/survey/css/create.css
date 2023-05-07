@@ -24,10 +24,14 @@
 
     width: 100%;
 
+    border-radius: 0.5rem;
+
+    border-width: 1px;
+
     padding: 0.25rem
 }
 
-    .survey-details .form-group ul {
+    .survey-details .form-group ul:not(.errorlist) {
 
     margin-bottom: 1rem;
 
@@ -38,20 +42,16 @@
     padding-left: 1.5rem
 }
 
-    .survey-details .form-group ul li {
+    .survey-details .form-group ul:not(.errorlist) li.option-item {
 
     margin-bottom: 0.5rem
 }
 
-    .survey-details .question-form-container {
+    .survey-details .form-group ul:not(.errorlist) li.option-item .option-container {
 
-    border-bottom-width: 1px;
+    display: flex;
 
-    --tw-border-opacity: 1;
-
-    border-bottom-color: rgb(209 213 219 / var(--tw-border-opacity));
-
-    padding-bottom: 1.5rem
+    gap: 0.5rem
 }
 
     .survey-details .divider-form {
@@ -133,4 +133,40 @@
     --tw-gradient-to: transparent var(--tw-gradient-to-position);
 
     --tw-gradient-to-position:  
+}
+
+    .survey-details .questions-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.75rem
+}
+
+    .survey-details .questions-container .question-form-container {
+
+    position: relative;
+
+    border-bottom-width: 1px;
+
+    --tw-border-opacity: 1;
+
+    border-bottom-color: rgb(209 213 219 / var(--tw-border-opacity));
+
+    padding-bottom: 1.5rem
+}
+
+    .survey-details .questions-container .question-form-container .btn-delete-question {
+
+    position: absolute;
+
+    top: 0px;
+
+    right: 0px
+}
+
+    .survey-details .questions-container svg {
+
+    width: 1.5rem
 }

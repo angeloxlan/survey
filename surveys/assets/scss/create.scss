@@ -10,20 +10,20 @@
 
         input,
         textarea {
-            @apply p-1 w-full;
+            @apply p-1 w-full border rounded-lg;
         }
 
-        ul {
+        ul:not(.errorlist) {
             @apply list-disc w-full pl-6 mb-4;
 
-            li {
+            li.option-item {
                 @apply mb-2;
+
+                .option-container {
+                    @apply flex gap-2;
+                }
             }
         }
-    }
-
-    .question-form-container {
-        @apply border-b border-b-gray-300 pb-6;
     }
 
     .divider-form {
@@ -31,6 +31,22 @@
 
         div {
             @apply h-0.5 bg-gradient-to-r from-transparent from-0% via-gray-600 via-50% to-transparent
+        }
+    }
+
+    .questions-container {
+        @apply flex flex-col gap-3;
+
+        .question-form-container {
+            @apply relative border-b border-b-gray-300 pb-6;
+
+            .btn-delete-question {
+                @apply absolute top-0 right-0;
+            }
+        }
+
+        svg {
+            @apply w-6;
         }
     }
 }

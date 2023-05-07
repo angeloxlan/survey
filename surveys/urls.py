@@ -1,9 +1,9 @@
 from django.urls import path
 from django.http import HttpResponse
 
-from .views import CreatePageView
+from .views import create_survey
 
 
 urlpatterns = [
-    path('create/', CreatePageView.as_view(), name='create-form'),
+    path('create/', create_survey, name='create-survey'),
 ]

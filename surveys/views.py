@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.views.generic import TemplateView
 from .forms import SurveyForm, QuestionFormSet
 from .models import Survey
@@ -17,7 +19,8 @@ def create_survey(request):
         if all([survey_form.is_valid(), question_formset.is_valid()]):
             survey_form.save()
             question_formset.save()
-            return render(request, 'surveys/pages/preview.html')
+            return HttpResponseRedirect(reverse(
+                'preview-survey', kwargs={ 'slug': survey.slug }))
     else:
         survey_form = SurveyForm(instance=survey)
         question_formset = QuestionFormSet(instance=survey)
@@ -28,3 +31,11 @@ def create_survey(request):
     }
 
     return render(request, 'surveys/pages/create.html', context)
+
+@login_required
+def preview_survey(request, slug):
+    survey = get_object_or_404(Survey, slug=slug, creator=request.user)
+    context = {
+        'survey': survey,
+    }
+    return render(request, 'surveys/pages/preview.html', context)

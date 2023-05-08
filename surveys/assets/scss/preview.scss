@@ -1,0 +1,23 @@
+.survey-details {
+    .form-group {
+        @apply px-20;
+
+        .field-title {
+            @apply font-bold text-slate-400;
+        }
+
+        & > .field {
+            @apply mb-3;
+        }
+
+        .field-question {
+            @apply font-bold;
+        }
+
+        ul:not(.errorlist) {
+            li.option-item {
+                @apply mb-0;
+            }
+        }
+    }
+}

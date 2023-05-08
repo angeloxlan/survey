@@ -1,0 +1,30 @@
+.survey-details .form-group {
+
+    padding-left: 5rem;
+
+    padding-right: 5rem
+}
+
+        .survey-details .form-group .field-title {
+
+    font-weight: 700;
+
+    --tw-text-opacity: 1;
+
+    color: rgb(148 163 184 / var(--tw-text-opacity))
+}
+
+        .survey-details .form-group > .field {
+
+    margin-bottom: 0.75rem
+}
+
+        .survey-details .form-group .field-question {
+
+    font-weight: 700
+}
+
+        .survey-details .form-group ul:not(.errorlist) li.option-item {
+
+    margin-bottom: 0px
+}

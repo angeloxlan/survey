@@ -35,6 +35,11 @@ def create_survey(request):
 @login_required
 def preview_survey(request, slug):
     survey = get_object_or_404(Survey, slug=slug, creator=request.user)
+
+    if survey.is_active:
+        return HttpResponseRedirect(reverse(
+            'details-survey', kwargs={ 'slug': survey.slug }))
+
     context = {
         'survey': survey,
     }

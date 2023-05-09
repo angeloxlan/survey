@@ -2,9 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views.generic import TemplateView
-from .forms import SurveyForm, QuestionFormSet
-from .models import Survey
+from ..forms import SurveyForm, QuestionFormSet
+from ..models import Survey
 
 
 @login_required

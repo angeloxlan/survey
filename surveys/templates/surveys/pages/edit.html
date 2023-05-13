@@ -7,15 +7,15 @@
 {% endblock page-styles %}
 
 {% block page-title %}
-    Create Survey
+    Edit Survey
 {% endblock page-title %}
 
 {% block page-actions %}
-    <button x-data="actions" @click="createSurveySubmit" type="button" class="action-btn">Create Survey</button>
+    <button x-data="actions" @click="editSurveySubmit" type="button" class="action-btn">Save Survey</button>
 {% endblock page-actions %}
 
 {% block page-content %}
-    <form action="{% url 'create-survey' %}" method="post" id="create-survey-form">
+    <form action="{% url 'edit-survey' survey.slug %}" method="post" id="edit-survey-form">
         {% csrf_token %}
         <div x-data="form" class="survey-details">
             <div class="form-group">
@@ -30,13 +30,15 @@
                 <div class="hidden">
                     {% with empty_question=formQuestion.empty_form %}
                     <div x-ref="question-form-container" class="question-form-container placeholder">
-                        <button class="btn-delete-question" @click="deleteQuestion" type="button">
+                        <button class="btn-delete-question" @click.stop="deleteQuestion" type="button">
                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </button>
                         <div class="form-group">
-                            {{ empty_question }}
+                            {{ empty_question.text.label_tag }}
+                            {{ empty_question.text }}
+                            {{ empty_question.text.errors }}
                         </div>
                         <div class="form-group">
                             <label>Options</label>
@@ -45,8 +47,8 @@
                                 {% with empty_option=empty_question.options.empty_form %}
                                 <li class="option-item" x-ref="option-item">
                                     <div class="option-container">
-                                        {{ empty_option }}
-                                        <button @click="deleteOption" type="button">
+                                        {{ empty_option.text }}
+                                        <button @click.stop="deleteOption" type="button">
                                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
@@ -63,12 +65,14 @@
                 {{ formQuestion.management_form }}
                 {% for question in formQuestion.forms %}
                     <div class="question-form-container">
-                        <button class="btn-delete-question" @click="deleteQuestion" type="button">
+                        <button class="btn-delete-question" @click.stop="deleteQuestion" type="button">
+                            {{ question.DELETE }}
                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </button>
                         <div class="form-group">
+                            {{ question.id }}
                             {{ question.text.label_tag }}
                             {{ question.text }}
                             {{ question.text.errors }}
@@ -80,8 +84,10 @@
                                 {% for option in question.options.forms %}
                                     <li class="option-item">
                                         <div class="option-container">
+                                            {{ option.id }}
                                             {{ option.text }}
-                                            <button @click="deleteOption" type="button">
+                                            <button class="btn-delete-option" @click.stop="deleteOption" type="button">
+                                                {{ option.DELETE }}
                                                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
@@ -107,5 +113,5 @@
 
 {% block page-javascript %}
     <script src="{% static 'surveys/js/dynamic-survey-form.js' %}" type="text/javascript"></script>
-    <script src="{% static 'surveys/js/create.js' %}" type="text/javascript"></script>
+    <script src="{% static 'surveys/js/edit.js' %}" type="text/javascript"></script>
 {% endblock page-javascript %}

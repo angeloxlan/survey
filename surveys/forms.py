@@ -179,3 +179,38 @@ OptionFormSet = inlineformset_factory(
     can_delete=False,
     extra=1,
 )
+
+
+class EditBaseQuestionFormSet(BaseQuestionFormSet):
+    def __init__(self, *args, **kwargs):
+        super(EditBaseQuestionFormSet, self).__init__(*args, **kwargs)
+
+    def add_fields(self, form, index):
+        super().add_fields(form, index)
+        form.options = EditOptionFormSet(
+            instance=form.instance,
+            data=form.data if form.is_bound else None,
+            files=form.files if form.is_bound else None,
+            prefix='%s-%s' % (
+                form.prefix,
+                EditOptionFormSet.get_default_prefix()),
+        )
+
+
+EditQuestionFormSet = inlineformset_factory(
+    Survey,
+    Question,
+    form=QuestionForm,
+    formset=EditBaseQuestionFormSet,
+    extra=0,
+    can_delete=True,
+)
+
+EditOptionFormSet = inlineformset_factory(
+    Question,
+    Option,
+    form=OptionForm,
+    formset=BaseOptionFormSet,
+    can_delete=True,
+    extra=0,
+)

@@ -1,0 +1,24 @@
+.survey-details .form-group label {
+    margin-bottom: 0.25rem
+}
+        .survey-details .form-group input,
+        .survey-details .form-group textarea {
+    width: 100%;
+    border-radius: 0.5rem;
+    border-width: 1px;
+    padding: 0.25rem
+}
+    .survey-details .questions-container .question-form-container .btn-delete-question {
+    position: absolute;
+    top: 0px;
+    right: 0px
+}
+    .survey-details .questions-container .question-form-container .btn-delete-question input[type="checkbox"] {
+    display: none
+}
+    .survey-details .questions-container .question-form-container .option-container .btn-delete-option input[type="checkbox"] {
+    display: none
+}
+    .survey-details .questions-container svg {
+    width: 1.5rem
+}

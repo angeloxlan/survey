@@ -11,7 +11,7 @@
 {% endblock page-title %}
 
 {% block page-actions %}
-    <button x-data="actions" type="button" class="action-btn">Edit Survey</button>
+    <a href="{% url 'edit-survey' survey.slug %}" class="action-btn">Edit Survey</a>
     <button x-data="actions" type="button" class="action-btn">Start Survey</button>
 {% endblock page-actions %}
 

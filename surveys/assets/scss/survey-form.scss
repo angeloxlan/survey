@@ -14,6 +14,18 @@
         .question-form-container {
             .btn-delete-question {
                 @apply absolute top-0 right-0;
+
+                input[type="checkbox"] {
+                    @apply hidden;
+                }
+            }
+
+            .option-container {
+                .btn-delete-option {
+                    input[type="checkbox"] {
+                        @apply hidden;
+                    }
+                }
             }
         }
 

@@ -95,3 +95,16 @@ def details_survey(request, slug):
         'total_submissions': total_submissions,
     }
     return render(request, 'surveys/pages/detail.html', context)
+
+@login_required
+def start_survey(request, slug):
+    survey = get_object_or_404(Survey, slug=slug, creator=request.user)
+
+    if not survey.is_active:
+        survey.is_active = True
+        survey.save()
+        return HttpResponseRedirect(reverse(
+            'details-survey', kwargs={ 'slug': survey.slug }))
+
+    return HttpResponseRedirect(reverse(
+        'preview-survey', kwargs={ 'slug': survey.slug }))

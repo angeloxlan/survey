@@ -12,39 +12,39 @@
 
 {% block page-actions %}
     <a href="{% url 'edit-survey' survey.slug %}" class="action-btn">Edit Survey</a>
-    <button x-data="actions" type="button" class="action-btn">Start Survey</button>
+    <a href="{% url 'start-survey' survey.slug %}" class="action-btn">Start Survey</a>
 {% endblock page-actions %}
 
 {% block page-content %}
-        <div class="survey-details">
-            <div class="form-group">
-                <p class="field-title">Survey title:</p>
-                <p class="field">{{ survey.title }}</p>
-                <p class="field-title">Description:</p>
-                <p class="field text-justify">{{ survey.description }}</p>
-            </div>
-            <div class="divider-form"><div></div></div>
-            <div class="questions-container">
-                {% for question in survey.question_set.all %}
-                    <div class="question-form-container">
-                        <div class="form-group">
-                            <p class="field-title">Question:</p>
-                            <p class="field field-question">{{ question.text }}</p>
-                        </div>
-                        <div class="form-group">
-                            <p class="field-title">Options</p>
-                            <ul class="options-list">
-                                {% for option in question.option_set.all %}
-                                    <li class="option-item">
-                                        <p class="field"> {{ option.text }} </p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+    <div class="survey-details">
+        <div class="form-group">
+            <p class="field-title">Survey title:</p>
+            <p class="field">{{ survey.title }}</p>
+            <p class="field-title">Description:</p>
+            <p class="field text-justify">{{ survey.description }}</p>
         </div>
+        <div class="divider-form"><div></div></div>
+        <div class="questions-container">
+            {% for question in survey.question_set.all %}
+                <div class="question-form-container">
+                    <div class="form-group">
+                        <p class="field-title">Question:</p>
+                        <p class="field field-question">{{ question.text }}</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="field-title">Options</p>
+                        <ul class="options-list">
+                            {% for option in question.option_set.all %}
+                                <li class="option-item">
+                                    <p class="field"> {{ option.text }} </p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock page-content %}
 
 {% block page-javascript %}

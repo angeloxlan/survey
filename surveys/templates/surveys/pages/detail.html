@@ -1,0 +1,48 @@
+{% extends '../base.html' %}
+
+{% block page-styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/survey/css/survey.css' %}">
+    <link rel="stylesheet" href="{% static '/survey/css/preview.css' %}">
+{% endblock page-styles %}
+
+{% block page-title %}
+    Survey Details
+{% endblock page-title %}
+
+{% block page-actions %}
+    <a href="#" class="action-btn">View Surveys</a>
+{% endblock page-actions %}
+
+{% block page-content %}
+        <div class="survey-details">
+            <div class="form-group">
+                <p class="field survey-title">{{ survey.title }}</p>
+                <p class="field survey-description">{{ survey.description }}</p>
+                <p class="field survey-description">You have had 
+                    <span class="font-bold">{{ total_submissions }} submission{{ total_submissions|pluralize }}</span>
+                </p>
+                <p class="field survey-description">Survey URL: {{ public_url }}</p>
+            </div>
+            <div class="divider-form"><div></div></div>
+            <div class="questions-container">
+                <p class="field survey-title">Results</p>
+                {% for question in survey.question_set.all %}
+                    <div class="question-form-container">
+                        <div class="form-group">
+                            <p class="field field-question">{{ question.text }}</p>
+                        </div>
+                        <div class="form-group">
+                            <ol class="options-list">
+                                {% for option in question.option_set.all %}
+                                    <li class="option-item">
+                                        <p class="field"> {{ option.text }} - {{ option.rate|floatformat:2 }}% </p>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock page-content %}

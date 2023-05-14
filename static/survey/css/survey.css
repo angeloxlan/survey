@@ -14,7 +14,8 @@
     flex-direction: column
 }
 
-    .survey-details .form-group ul:not(.errorlist) {
+    .survey-details .form-group ul:not(.errorlist),
+        .survey-details .form-group ol {
 
     margin-bottom: 1rem;
 
@@ -25,12 +26,12 @@
     padding-left: 1.5rem
 }
 
-    .survey-details .form-group ul:not(.errorlist) li.option-item {
+    .survey-details .form-group ul:not(.errorlist) li.option-item, .survey-details .form-group ol li.option-item {
 
     margin-bottom: 0.5rem
 }
 
-    .survey-details .form-group ul:not(.errorlist) li.option-item .option-container {
+    .survey-details .form-group ul:not(.errorlist) li.option-item .option-container, .survey-details .form-group ol li.option-item .option-container {
 
     display: flex;
 

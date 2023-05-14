@@ -8,6 +8,7 @@ survey_patterns = [
     path('create/', survey.create_survey, name='create-survey'),
     path('preview/<slug:slug>/', survey.preview_survey, name='preview-survey'),
     path('edit/<slug:slug>/', survey.edit_survey, name='edit-survey'),
+    path('detail/<slug:slug>/', survey.details_survey, name='details-survey'),
 ]
 
 urlpatterns = [

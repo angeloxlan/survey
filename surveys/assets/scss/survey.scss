@@ -4,7 +4,8 @@
     .form-group {
         @apply flex flex-col;
 
-        ul:not(.errorlist) {
+        ul:not(.errorlist),
+        ol {
             @apply list-disc w-full pl-6 mb-4;
 
             li.option-item {

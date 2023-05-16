@@ -1,0 +1,62 @@
+{% extends '../base.html' %}
+
+{% block page-styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/survey/css/survey.css' %}">
+    <link rel="stylesheet" href="{% static '/survey/css/surveys-list.css' %}">
+{% endblock page-styles %}
+
+{% block page-title %}
+    Your Surveys
+{% endblock page-title %}
+
+{% block page-actions %}
+    <a href="{% url 'create-survey' %}" class="action-btn">Create New Survey</a>
+{% endblock page-actions %}
+
+{% block page-content %}
+    <form x-data="actions" x-on:change="submitFilters" action="{% url 'list-surveys' %}" 
+        method="get" id="form-filters" class="surveys-filters">
+        {{ statuses }}
+        {{ sorting }}
+        <div class="search-field w-full md:w-76 relative">
+            <div class="absolute top-0 flex items-center h-full ml-2">
+                <svg class="w-4 text-gray-500" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <input type="text" placeholder="Find an survey" name="search"
+                class="w-full rounded-xl border-none placeholder-gray-700 px-4 py-2 pl-8">
+        </div>
+    </form>
+    <div class="surveys-list">
+        {% for survey in surveys %}
+            {% include '../components/survey-item.html' with survey=survey %}
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <div class="page-btn-container text-center md:text-right">
+            {% if surveys.has_previous %}
+                <a href="{% url 'list-surveys' %}?page={{ surveys.previous_page_number }}"
+                    class="btn-pagination">
+                    Previous Page
+                </a>
+            {% endif%}
+        </div>
+        <div class="current-page">
+            {{ surveys.number }} of {{ surveys.paginator.num_pages }}
+        </div>
+        <div class="page-btn-container text-center md:text-left">
+            {% if surveys.has_next %}
+                <a href="{% url 'list-surveys' %}?page={{ surveys.next_page_number }}"
+                    class="btn-pagination">
+                    Next Page
+                </a>
+            {% endif%}
+        </div>
+    </div>
+{% endblock page-content %}
+
+{% block page-javascript %}
+    <script src="{% static 'surveys/js/surveys-list.js' %}" type="text/javascript"></script>
+{% endblock page-javascript %}

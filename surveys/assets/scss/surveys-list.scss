@@ -1,0 +1,72 @@
+.surveys-filters {
+    @apply flex flex-col md:flex-row gap-2 mb-4;
+
+    & > select, 
+    > .search-field {
+        @apply rounded-md;
+    }
+
+    & > select {
+        @apply w-full md:w-1/4 py-1 px-3 bg-white opacity-100;
+    }
+
+    & > .search-field {
+        @apply w-full md:w-1/2;
+    }
+}
+
+.surveys-list {
+    @apply flex flex-col gap-5;
+
+    .survey {
+        @apply flex flex-col gap-3 bg-white rounded-xl px-6 py-3 hover:scale-[1.02] transition-all duration-150;
+
+        .survey-title {
+            @apply font-bold text-2xl;
+        }
+
+        .survey-description {
+            @apply text-justify;
+        }
+
+        .survey-info {
+            @apply flex justify-between items-center;
+
+            .survey-stats {
+                @apply flex gap-2;
+
+                .survey-date {
+                    @apply font-bold text-slate-400;
+                }
+
+                .survey-submissions {
+                    @apply font-bold;
+                }
+            }
+
+            .survey-status {
+                @apply rounded-full py-1 px-3;
+
+                &.status-running {
+                    @apply bg-emerald-500 text-white;
+                }
+
+                &.status-notactive {
+                    @apply bg-cyan-500 text-white;
+                }
+            }
+        }
+    }
+}
+
+.pagination {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-4 mt-8;
+
+    .btn-pagination {
+        @apply rounded-md border bg-white px-4 py-2;
+    }
+
+    .current-page {
+        @apply text-center
+    }
+}

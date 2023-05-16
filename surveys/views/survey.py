@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from ..forms import SurveyForm, QuestionFormSet, EditQuestionFormSet
+from ..forms import (EditQuestionFormSet, StatusFilter, 
+    SortFilter, SurveyForm, QuestionFormSet)
 from ..models import Submission, Survey, Question
 
 
@@ -108,3 +111,39 @@ def start_survey(request, slug):
 
     return HttpResponseRedirect(reverse(
         'preview-survey', kwargs={ 'slug': survey.slug }))
+
+@login_required
+def survey_list(request):
+    statuses = StatusFilter(request.GET)
+    sorting = SortFilter(request.GET)
+
+    request_status = request.GET.get('status')
+    request_sorting = request.GET.get('sort')
+    request_search = request.GET.get('search')
+
+    if request_status == 'all' or not request_status:
+        surveys = Survey.objects.order_by('-created_at')
+    elif request_status == 'running':
+        surveys = Survey.objects.filter(is_active=True).order_by('-created_at')
+    elif request_status == 'inactive':
+        surveys = Survey.objects.filter(is_active=False).order_by('-created_at')
+
+    if request_sorting == 'newest':
+        surveys = surveys.order_by('-created_at')
+    elif request_sorting == 'oldest':
+        surveys = surveys.order_by('created_at')
+
+    if request_search:
+        surveys = surveys.filter(title__icontains=request_search)
+
+    paginator = Paginator(surveys, 10)
+
+    page_number = request.GET.get('page')
+    survey_page = paginator.get_page(page_number)
+
+    context = {
+        'surveys': survey_page,
+        'statuses': statuses,
+        'sorting': sorting,
+    }
+    return render(request, 'surveys/pages/surveys-list.html', context)

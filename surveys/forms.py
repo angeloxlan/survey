@@ -1,4 +1,5 @@
-from django.forms import ModelForm, Textarea, inlineformset_factory, ValidationError
+from django.forms import (ChoiceField, Form, ModelForm, 
+    Select, Textarea, inlineformset_factory, ValidationError)
 from django.forms.models import BaseInlineFormSet
 from django.forms.utils import ErrorDict
 from .models.option import Option
@@ -214,3 +215,34 @@ EditOptionFormSet = inlineformset_factory(
     can_delete=True,
     extra=0,
 )
+
+# Filters
+STATUSES = (
+    ('', 'Status'),
+    ('all', 'All'),
+    ('running', 'Running'),
+    ('inactive', 'Not Active'),
+)
+
+SORTING = (
+    ('', 'Sort By'),
+    ('newest', 'Newest First'),
+    ('oldest', 'Oldest First'),
+)
+
+class SelectFilter(Select):
+    def __init__(self, *args, **kwargs):
+        super(SelectFilter, self).__init__(*args, **kwargs)
+
+    def create_option(self, *args,**kwargs):
+        option = super().create_option(*args,**kwargs)
+        if not option.get('value'):
+            option['attrs']['disabled'] = True
+        return option
+
+
+class StatusFilter(Form):
+    status = ChoiceField(label='', widget=SelectFilter, choices=STATUSES, required=False)
+
+class SortFilter(Form):
+    sort = ChoiceField(label='', widget=SelectFilter, choices=SORTING, required=False)

@@ -1,0 +1,16 @@
+{% if survey.status == 'Running' %}
+<a href="{% url 'details-survey' survey.slug %}" class="survey">
+{% elif survey.status == 'Not Active' %}
+<a href="{% url 'preview-survey' survey.slug %}" class="survey">
+{% endif %}
+    <p class="survey-title">{{ survey.title }}</p>
+    <p class="survey-description">{{ survey.description }}</p>
+    <div class="survey-info">
+        <div class="survey-stats">
+            <p class="survey-date">{{ survey.created_at|date:'jS, F' }}</p>
+            <span>•</span>
+            <p class="survey-submissions">{{ survey.total_submissions }} submission{{ survey.total_submissions|pluralize }}</p>
+        </div>
+        <span class="survey-status status-{{ survey.status|lower|cut:' ' }}">{{ survey.status }}</span>
+    </div>
+</a>

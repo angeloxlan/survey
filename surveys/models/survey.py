@@ -35,3 +35,12 @@ class Survey(models.Model):
         self.slug = _slug
 
         super(Survey, self).save(*args, **kwargs)
+
+    def total_submissions(self):
+        return self.submission_set.count()
+
+    def status(self):
+        if self.is_active:
+            return 'Running'
+        else:
+            return 'Not Active'

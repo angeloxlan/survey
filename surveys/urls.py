@@ -14,4 +14,5 @@ survey_patterns = [
 
 urlpatterns = [
     path('survey/', include(survey_patterns)),
+    path('surveys/', survey.survey_list, name='list-surveys'),
 ]

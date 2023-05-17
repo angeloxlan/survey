@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django import forms
+from django.db import transaction
+from django.forms import formset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from ..forms import (EditQuestionFormSet, StatusFilter, 
-    SortFilter, SurveyForm, QuestionFormSet)
-from ..models import Submission, Survey, Question
+from ..forms import (AnswerForm, BaseAnswerFormSet, EditQuestionFormSet, 
+    StatusFilter, SortFilter, SurveyForm, QuestionFormSet)
+from ..models import Answer, Submission, Survey, Question
 
 
 @login_required
@@ -147,3 +148,29 @@ def survey_list(request):
         'sorting': sorting,
     }
     return render(request, 'surveys/pages/surveys-list.html', context)
+
+def survey_submission(request, slug):
+    survey = get_object_or_404(Survey, slug=slug, is_active=True)
+    questions = survey.question_set.order_by('id')
+
+    form_kwargs = { 'questions': questions }
+
+    AnswerFormSet = formset_factory(AnswerForm, extra=len(questions), formset=BaseAnswerFormSet)
+    if request.method == 'POST':
+        question_formset = AnswerFormSet(request.POST, form_kwargs=form_kwargs)
+        if question_formset.is_valid():
+            with transaction.atomic():
+                submission = Submission.objects.create(survey=survey)
+                for question in question_formset:
+                    Answer.objects.create(
+                        option_id=question.cleaned_data['option'], submission=submission)
+            
+            return HttpResponseRedirect(reverse('thanks-survey'))
+    else:
+        question_formset = AnswerFormSet(form_kwargs=form_kwargs)
+        
+    context = {
+        'survey': survey,
+        'questions': question_formset,
+    }
+    return render(request, 'surveys/pages/submission.html', context)

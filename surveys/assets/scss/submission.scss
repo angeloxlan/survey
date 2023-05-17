@@ -1,0 +1,18 @@
+.submission-form {
+    @apply col-start-1 md:col-start-2 col-span-1 md:col-span-2 flex flex-col w-full justify-center;
+
+    .question-container {
+        @apply mb-4;
+
+        & > label {
+            @apply font-bold text-lg;
+        }
+
+        ul {
+        }
+    }
+
+    .action-btn {
+        @apply mt-4;
+    }
+}

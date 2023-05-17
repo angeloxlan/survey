@@ -15,4 +15,5 @@ survey_patterns = [
 urlpatterns = [
     path('survey/', include(survey_patterns)),
     path('surveys/', survey.survey_list, name='list-surveys'),
+    path('<slug:slug>/', survey.survey_submission, name='submission-survey'),
 ]

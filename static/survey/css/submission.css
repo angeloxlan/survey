@@ -1,0 +1,46 @@
+.submission-form {
+
+    grid-column: span 1 / span 1;
+
+    grid-column-start: 1;
+
+    display: flex;
+
+    width: 100%;
+
+    flex-direction: column;
+
+    justify-content: center
+}
+
+@media (min-width: 768px) {
+
+    .submission-form {
+
+        grid-column: span 2 / span 2;
+
+        grid-column-start: 2
+    }
+}
+
+    .submission-form .question-container {
+
+    margin-bottom: 1rem
+}
+
+    .submission-form .question-container > label {
+
+    font-size: 1.125rem;
+
+    line-height: 1.75rem;
+
+    font-weight: 700
+}
+
+    .submission-form .question-container ul {
+        }
+
+    .submission-form .action-btn {
+
+    margin-top: 1rem
+}

@@ -1,5 +1,5 @@
-from django.forms import (ChoiceField, Form, ModelForm, 
-    Select, Textarea, inlineformset_factory, ValidationError)
+from django.forms import (BaseFormSet, ChoiceField, Form, ModelForm, 
+    RadioSelect, Select, Textarea, inlineformset_factory, ValidationError)
 from django.forms.models import BaseInlineFormSet
 from django.forms.utils import ErrorDict
 from .models.option import Option
@@ -246,3 +246,35 @@ class StatusFilter(Form):
 
 class SortFilter(Form):
     sort = ChoiceField(label='', widget=SelectFilter, choices=SORTING, required=False)
+
+
+class AnswerForm(Form):
+    def __init__(self, *args, **kwargs):
+        question = kwargs.pop('question')
+        super(AnswerForm, self).__init__(*args, **kwargs)
+        choices = [(o.pk, o.text) for o in question.option_set.order_by('id')]
+        option_field = ChoiceField(label=question.text, choices=choices, widget=RadioSelect, required=True)
+        self.fields['option'] = option_field
+    
+    def is_valid(self):
+        super().is_valid()
+        self._errors = ErrorDict()
+        for name, field in self.fields.items():
+            if field.disabled:
+                value = self.get_initial_for_field(field, name)
+            else:
+                value = field.widget.value_from_datadict(
+                    self.data, self.files, self.add_prefix(name))
+            try:
+                value = field.clean(value)
+                self.cleaned_data[name] = value
+            except ValidationError as e:
+                self._errors[name] = self.error_class([e])
+
+        return self.is_bound and not self.errors
+
+
+class BaseAnswerFormSet(BaseFormSet):
+    def get_form_kwargs(self, index):
+        kwargs = super(BaseAnswerFormSet, self).get_form_kwargs(index)
+        return { 'question': kwargs['questions'][index] }

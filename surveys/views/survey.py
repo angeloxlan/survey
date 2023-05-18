@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.forms import formset_factory
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views.generic.base import TemplateView
@@ -23,8 +22,7 @@ def create_survey(request):
         if all([survey_form.is_valid(), question_formset.is_valid()]):
             survey_form.save()
             question_formset.save()
-            return HttpResponseRedirect(reverse(
-                'preview-survey', kwargs={ 'slug': survey.slug }))
+            return redirect('preview-survey', slug=survey.slug)
     else:
         survey_form = SurveyForm(instance=survey)
         question_formset = QuestionFormSet(instance=survey)
@@ -41,8 +39,7 @@ def preview_survey(request, slug):
     survey = get_object_or_404(Survey, slug=slug, creator=request.user)
 
     if survey.is_active:
-        return HttpResponseRedirect(reverse(
-            'details-survey', kwargs={ 'slug': survey.slug }))
+        return redirect('details-survey', slug=survey.slug)
 
     context = {
         'survey': survey,
@@ -54,8 +51,7 @@ def edit_survey(request, slug):
     survey = get_object_or_404(Survey, slug=slug, creator=request.user)
 
     if survey.is_active:
-        return HttpResponseRedirect(reverse(
-            'details-survey', kwargs={ 'slug': survey.slug }))
+        return redirect('details-survey', slug=survey.slug)
 
     if request.method == 'POST':
         survey_form = SurveyForm(request.POST or None, instance=survey)
@@ -66,8 +62,7 @@ def edit_survey(request, slug):
         if all([survey_form.is_valid(), question_formset.is_valid()]):
             survey_form.save()
             question_formset.save()
-            return HttpResponseRedirect(reverse(
-                'preview-survey', kwargs={ 'slug': survey.slug }))
+            return redirect('preview-survey', slug=survey.slug)
     else:
         survey_form = SurveyForm(instance=survey)
         question_formset = EditQuestionFormSet(
@@ -87,8 +82,7 @@ def details_survey(request, slug):
     survey = get_object_or_404(Survey, slug=slug, creator=request.user)
 
     if not survey.is_active:
-        return HttpResponseRedirect(reverse(
-            'preview-survey', kwargs={ 'slug': survey.slug }))
+        return redirect('preview-survey', slug=survey.slug)
 
     total_submissions = Submission.objects.filter(survey=survey).count()
     host = request.get_host()
@@ -108,11 +102,9 @@ def start_survey(request, slug):
     if not survey.is_active:
         survey.is_active = True
         survey.save()
-        return HttpResponseRedirect(reverse(
-            'details-survey', kwargs={ 'slug': survey.slug }))
+        return redirect('details-survey', slug=survey.slug)
 
-    return HttpResponseRedirect(reverse(
-        'preview-survey', kwargs={ 'slug': survey.slug }))
+    return redirect('preview-survey', slug=survey.slug)
 
 @login_required
 def survey_list(request):

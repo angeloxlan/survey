@@ -1,0 +1,33 @@
+main {
+
+    display: flex;
+
+    min-height: 20rem;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center
+}
+
+    main h3 {
+
+    font-size: 1.5rem;
+
+    line-height: 2rem;
+
+    font-weight: 700
+}
+
+    main p {
+
+    font-size: 1.25rem;
+
+    line-height: 1.75rem
+}
+
+    main p .survey-title {
+
+    font-weight: 700
+}

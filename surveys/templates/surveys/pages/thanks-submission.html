@@ -9,7 +9,7 @@
         {% load static %}
         <link rel="stylesheet" href="{% static '/survey/css/tailwind.css' %}">
         <link rel="stylesheet" href="{% static '/survey/css/base.css' %}">
-        <link rel="stylesheet" href="{% static '/survey/css/submission.css' %}">
+        <link rel="stylesheet" href="{% static '/survey/css/thanks-submission.css' %}">
     </head>
     <body>
         <header>
@@ -29,20 +29,11 @@
         </header>
 
         <main>
-            <form action="{% url 'submission-survey' survey.slug %}" method="post" class="submission-form">
-                {% csrf_token %}
-                {{ questions.management_form }}
-                {% for question in questions %}
-                    <div class="question-container">
-                        {{ question.label_tag }}
-                        {{ question }}
-                    </div>
-                {% endfor %}
-                <button type="submit" class="action-btn">Submit</button>
-            </form>
+            <h3>Thanks! All done.</h3>
+            <p>Thanks for taking <span class="survey-title">{{ survey_title }}</span>.</p>
+            <p>You can close this page now.</p>
         </main>
 
         <script src="{% static 'survey/js/alpine.min.js' %}" type="module"></script>
-        <script src="{% static 'surveys/js/base.js' %}" type="text/javascript"></script>
     </body>
 </html>

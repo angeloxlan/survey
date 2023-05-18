@@ -3,8 +3,9 @@ from django.core.paginator import Paginator
 from django.db import transaction
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
+from django.views.generic.base import TemplateView
 from ..forms import (AnswerForm, BaseAnswerFormSet, EditQuestionFormSet, 
     StatusFilter, SortFilter, SurveyForm, QuestionFormSet)
 from ..models import Answer, Submission, Survey, Question
@@ -165,7 +166,7 @@ def survey_submission(request, slug):
                     Answer.objects.create(
                         option_id=question.cleaned_data['option'], submission=submission)
             
-            return HttpResponseRedirect(reverse('thanks-survey'))
+            return redirect('thanks-survey', permanent=True, survey_title=survey.title)
     else:
         question_formset = AnswerFormSet(form_kwargs=form_kwargs)
         
@@ -174,3 +175,7 @@ def survey_submission(request, slug):
         'questions': question_formset,
     }
     return render(request, 'surveys/pages/submission.html', context)
+
+class ThankSubmission(TemplateView):
+    template_name = 'surveys/pages/thanks-submission.html'
+    permanent = True

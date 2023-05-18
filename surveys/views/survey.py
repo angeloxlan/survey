@@ -86,8 +86,8 @@ def details_survey(request, slug):
 
     total_submissions = Submission.objects.filter(survey=survey).count()
     host = request.get_host()
-    # public_path = reverse('public-survey', kwargs={ 'slug': survey.slug })
-    public_url = f'{request.scheme}://{host}'
+    public_path = reverse('submission-survey', kwargs={ 'slug': survey.slug })
+    public_url = f'{request.scheme}://{host}{public_path}'
     context = {
         'public_url': public_url,
         'survey': survey,

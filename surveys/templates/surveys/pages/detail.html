@@ -15,14 +15,24 @@
 {% endblock page-actions %}
 
 {% block page-content %}
-        <div class="survey-details">
+        <div x-data="clipboard" class="survey-details">
             <div class="form-group">
                 <p class="field survey-title">{{ survey.title }}</p>
                 <p class="field survey-description">{{ survey.description }}</p>
                 <p class="field survey-description">You have had 
                     <span class="font-bold">{{ total_submissions }} submission{{ total_submissions|pluralize }}</span>
                 </p>
-                <p class="field survey-description">Survey URL: {{ public_url }}</p>
+                <div class="url-container">
+                    <span x-cloak x-show="isCopied"
+                        x-transition.scale.origin.bottom
+                        class="tooltip-container">
+                        <span class="tooltip-icon">
+                            <svg aria-hidden="true" width="16" height="6" viewBox="0 0 16 6" class="absolute left-1/2 top-full -ml-2 -mt-px text-gray-900"><path fill-rule="evenodd" clip-rule="evenodd" d="M15 0H1V1.00366V1.00366V1.00371H1.01672C2.72058 1.0147 4.24225 2.74704 5.42685 4.72928C6.42941 6.40691 9.57154 6.4069 10.5741 4.72926C11.7587 2.74703 13.2803 1.0147 14.9841 1.00371H15V0Z" fill="currentColor"></path></svg>
+                            Copied!
+                        </span>
+                    </span>
+                    <p @click="copyToClipboard" class="field survey-description">Survey URL: <span x-ref="url" class="url-copy">{{ public_url }}</span></p>
+                </div>
             </div>
             <div class="divider-form"><div></div></div>
             <div class="questions-container">
@@ -46,3 +56,7 @@
             </div>
         </div>
 {% endblock page-content %}
+
+{% block page-javascript %}
+    <script src="{% static 'surveys/js/detail.js' %}" type="text/javascript"></script>
+{% endblock page-javascript %}

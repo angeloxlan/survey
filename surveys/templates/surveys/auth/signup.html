@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Surveys</title>
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static '/survey/css/tailwind.css' %}">
+        <link rel="stylesheet" href="{% static '/survey/css/base.css' %}">
+        <link rel="stylesheet" href="{% static '/survey/css/auth.css' %}">
+    </head>
+    <body>
+        <header>
+            <div class="header-nav">
+                <a href="#">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="brand-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>
+                </a>
+
+                <h1>Surveys</h1>
+
+                <div>
+                </div>
+            </div>
+            <div class="divider-header"><div></div></div>
+        </header>
+
+        <main>
+            <form action="{% url 'signup' %}" method="post" class="form-auth" novalidate>
+                {% csrf_token %}
+                <h3>Sign up</h3>
+                {% for field in user_form %}
+                    <div class="form-group-auth">
+                        {{ field.label }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="action-btn">Sign up</button>
+            </form>
+            <hr>
+            <div class="aux-resource">
+                <p>Have an account? <a href="{% url 'login' %}" class="auth-link">Login</a></p>
+            </div>
+        </main>
+
+        <script src="{% static 'survey/js/alpine.min.js' %}" type="module"></script>
+    </body>
+</html>

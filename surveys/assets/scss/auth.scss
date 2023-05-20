@@ -1,0 +1,27 @@
+main {
+    @apply flex flex-col justify-center;
+
+    .form-auth {
+        @apply flex flex-col gap-4 mx-auto mt-20 w-[20rem];
+
+        h3 {
+            @apply font-bold text-lg;
+        }
+
+        .form-group-auth {
+            @apply flex flex-col;
+        }
+    }
+
+    hr {
+        @apply mx-auto w-[20rem] my-6;
+    }
+
+    .aux-resource {
+        @apply mx-auto w-[20rem];
+
+        .auth-link {
+            @apply font-bold;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 from django.urls import path, include
 from django.http import HttpResponse
 
+from .views import auth
 from .views import survey
 
 
@@ -13,6 +14,9 @@ survey_patterns = [
 ]
 
 urlpatterns = [
+    path('signup/', auth.signup, name='signup'),
+    path('login/', auth.login, name='login'),
+    path('logout/', auth.logout, name='logout'),
     path('survey/', include(survey_patterns)),
     path('surveys/', survey.survey_list, name='list-surveys'),
     path('thanks/<str:survey_title>', survey.ThankSubmission.as_view(), name='thanks-survey'),

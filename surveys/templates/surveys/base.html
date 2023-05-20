@@ -33,9 +33,9 @@
                         x-transition:enter.scale.0.origin.top.right 
                         x-transition:leave.scale.0.origin.top.right 
                         class="dropdown-options">
-                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                             <a href="#" class="dropdown-item">Account settings</a>
-                            <form method="POST" action="#">
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
                                 <button type="submit" class="dropdown-item">Sign out</button>
                             </form>
                     </div>

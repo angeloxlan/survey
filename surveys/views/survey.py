@@ -114,13 +114,15 @@ def survey_list(request):
     request_status = request.GET.get('status')
     request_sorting = request.GET.get('sort')
     request_search = request.GET.get('search')
+    
+    surveys = Survey.objects.filter(creator=request.user)
 
     if request_status == 'all' or not request_status:
-        surveys = Survey.objects.order_by('-created_at')
+        surveys = surveys.order_by('-created_at')
     elif request_status == 'running':
-        surveys = Survey.objects.filter(is_active=True).order_by('-created_at')
+        surveys = surveys.filter(is_active=True).order_by('-created_at')
     elif request_status == 'inactive':
-        surveys = Survey.objects.filter(is_active=False).order_by('-created_at')
+        surveys = surveys.filter(is_active=False).order_by('-created_at')
 
     if request_sorting == 'newest':
         surveys = surveys.order_by('-created_at')
